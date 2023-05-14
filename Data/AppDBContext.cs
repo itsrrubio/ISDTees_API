@@ -14,6 +14,7 @@ namespace ISDTees_API.Data
         {
 
         }
+        //This represents a table in our database
         public DbSet<Product> Products { get; set; }
     }
 }

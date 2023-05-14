@@ -89,3 +89,8 @@ C:\Users\rarub\source\repos\ISDTees_API\obj\Debug\ISDTees_API.dll
 C:\Users\rarub\source\repos\ISDTees_API\obj\Debug\ISDTees_API.pdb
 C:\Users\rarub\source\repos\ISDTees_API\bin\Swashbuckle.Core.dll
 C:\Users\rarub\source\repos\ISDTees_API\bin\WebActivatorEx.dll
+C:\Users\rarub\source\repos\ISDTees_API\obj\Debug\ISDTees_API.Migrations.UpdateDatabase.resources
+C:\Users\rarub\source\repos\ISDTees_API\obj\Debug\ISDTees_API.csproj.GenerateResource.cache
+C:\Users\rarub\source\repos\ISDTees_API\bin\System.Web.Cors.dll
+C:\Users\rarub\source\repos\ISDTees_API\bin\System.Web.Http.Cors.dll
+C:\Users\rarub\source\repos\ISDTees_API\bin\System.Web.Http.Cors.xml
