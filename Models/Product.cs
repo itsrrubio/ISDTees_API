@@ -11,11 +11,13 @@ namespace ISDTees_API.Models
         [Key]
         public int Id { get; set; }
         public string sku { get; set; }
+        public string gtin { get; set; }
         public string skuID_Master { get; set; }
         public string styleID { get; set; }
         public string brandName { get; set; }
         public string styleName { get; set; }
         public string colorName { get; set; }
         public string colorCode { get; set; }
+
     }
 }
