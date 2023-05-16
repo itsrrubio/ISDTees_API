@@ -51,7 +51,35 @@ namespace ISDTees_API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+        [HttpPut]
+        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (id != product.Id) return BadRequest();
+
+            try
+            {
+                using (var context = new AppDBContext())
+                {
+                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
+                    if (oldProduct == null) return NotFound();
+
+                    oldProduct.brandName = product.brandName;
+                    oldProduct.colorName = product.colorName;
+                    oldProduct.styleName = product.styleName;
+
+                    context.SaveChanges();
+                    return Ok("Product updated!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }
