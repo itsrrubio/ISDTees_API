@@ -14,7 +14,14 @@ namespace ISDTees_API.Data
         {
 
         }
-        //This represents a table in our database
+
+        //This represents the tables in our database
         public DbSet<Product> Products { get; set; }
+        public DbSet<Config> Configs { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<LineItem> LineItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Spec> Specs { get; set; }
+        public DbSet<Style> Styles { get; set; }
     }
 }

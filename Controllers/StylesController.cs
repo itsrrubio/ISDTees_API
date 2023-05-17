@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class StylesController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetStyle(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var style = context.Styles.FirstOrDefault(n => n.Id == id);
+                    if (style == null) return NotFound();
+                    return Ok(style);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetStyles()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var styles = context.Styles.ToList();
+                    return Ok(styles);
                 }
             }
             catch (Exception ex)
@@ -57,16 +57,17 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostStyle([FromBody] Style style)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.Styles.Add(style);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Style was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +77,30 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateStyle(int id, [FromBody] Style style)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != style.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldStyle = context.Styles.FirstOrDefault(n => n.Id == id);
+                    if (oldStyle == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldStyle.StyleID  = style.StyleID;
+                    oldStyle.PartNumber = style.PartNumber;
+                    oldStyle.BrandName = style.BrandName;
+                    oldStyle.StyleName = style.StyleName;
+                    oldStyle.UniquestyleName = style.UniquestyleName;
+                    oldStyle.Title = style.Title;
+                    oldStyle.BaseCategory = style.BaseCategory;
+                    oldStyle.ComparableGroup = style.ComparableGroup;
+                    oldStyle.CompanionGroup = style.CompanionGroup;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Style updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +108,23 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteStyle(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var style = context.Styles.FirstOrDefault(n => n.Id == id);
+                    if (style == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.Styles.Remove(style);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Style deleted.");
                 }
             }
             catch (Exception ex)

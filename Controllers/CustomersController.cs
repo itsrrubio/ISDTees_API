@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class CustomersController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var customer = context.Customers.FirstOrDefault(n => n.Id == id);
+                    if (customer == null) return NotFound();
+                    return Ok(customer);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetCustomers()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var customers = context.Customers.ToList();
+                    return Ok(customers);
                 }
             }
             catch (Exception ex)
@@ -56,17 +56,19 @@ namespace ISDTees_API.Controllers
 
         }
 
+
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostCustomer([FromBody] Customer customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.Customers.Add(customer);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Customer was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +78,24 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateCustomer(int id, [FromBody] Customer customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != customer.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldCustomer = context.Customers.FirstOrDefault(n => n.Id == id);
+                    if (oldCustomer == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldCustomer.CustomerID = customer.CustomerID;
+                    oldCustomer.CustomerName = customer.CustomerName;
+                    oldCustomer.AddressID = customer.AddressID;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Customer updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +103,22 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteCustomer(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var customer = context.Customers.FirstOrDefault(n => n.Id == id);
+                    if (customer == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.Customers.Remove(customer);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Customer deleted.");
                 }
             }
             catch (Exception ex)

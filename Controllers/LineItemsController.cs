@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class LineItemsController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetLineItem(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var lineItem = context.LineItems.FirstOrDefault(n => n.Id == id);
+                    if (lineItem == null) return NotFound();
+                    return Ok(lineItem);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetLineItems()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var lineItems = context.LineItems.ToList();
+                    return Ok(lineItems);
                 }
             }
             catch (Exception ex)
@@ -57,16 +57,17 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostLineItem([FromBody] LineItem lineItem)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.LineItems.Add(lineItem);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Line item was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +77,25 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateLineItem(int id, [FromBody] LineItem lineItem)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != lineItem.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldLineItem = context.LineItems.FirstOrDefault(n => n.Id == id);
+                    if (oldLineItem == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldLineItem.LineItemID = lineItem.LineItemID;
+                    oldLineItem.ProductID = lineItem.ProductID;
+                    oldLineItem.Description = lineItem.Description;
+                    oldLineItem.Price = lineItem.Price;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Line item updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +103,22 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteLineItem(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var lineItem = context.LineItems.FirstOrDefault(n => n.Id == id);
+                    if (lineItem == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.LineItems.Remove(lineItem);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Line Item deleted.");
                 }
             }
             catch (Exception ex)

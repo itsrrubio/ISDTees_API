@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class OrdersController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetOrder(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var order = context.Orders.FirstOrDefault(n => n.Id == id);
+                    if (order == null) return NotFound();
+                    return Ok(order);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetOrders()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var orders = context.Orders.ToList();
+                    return Ok(orders);
                 }
             }
             catch (Exception ex)
@@ -57,16 +57,17 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostOrder([FromBody] Order order)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.Orders.Add(order);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Order was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +77,30 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateOrder(int id, [FromBody] Order order)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != order.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldOrder = context.Orders.FirstOrDefault(n => n.Id == id);
+                    if (oldOrder == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldOrder.OrderNo  = order.OrderNo;
+                    oldOrder.OrderName  = order.OrderName;
+                    oldOrder.CustomerID  = order.CustomerID;
+                    oldOrder.ContactName = order.ContactName;
+                    oldOrder.OrderDate = order.OrderDate;
+                    oldOrder.OrderNotes = order.OrderNotes;
+                    oldOrder.SubTotal = order.SubTotal;
+                    oldOrder.Tax = order.Tax;
+                    oldOrder.Total = order.Total;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Order updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +108,23 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteOrder(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var order = context.Orders.FirstOrDefault(n => n.Id == id);
+                    if (order == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.Orders.Remove(order);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Order deleted.");
                 }
             }
             catch (Exception ex)
@@ -125,5 +132,6 @@ namespace ISDTees_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }

@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class SpecsController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetSpec(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var spec = context.Specs.FirstOrDefault(n => n.Id == id);
+                    if (spec == null) return NotFound();
+                    return Ok(spec);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetSpecs()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var specs = context.Specs.ToList();
+                    return Ok(specs);
                 }
             }
             catch (Exception ex)
@@ -57,16 +57,17 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostSpec([FromBody] Spec spec)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.Specs.Add(spec);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Spec was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +77,26 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateSpec(int id, [FromBody] Spec spec)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != spec.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldSpec = context.Specs.FirstOrDefault(n => n.Id == id);
+                    if (oldSpec == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldSpec.SpecID = spec.SpecID;
+                    oldSpec.SizeName = spec.SizeName;
+                    oldSpec.SizeOrder  = spec.SizeOrder;
+                    oldSpec.SpecName = spec.SpecName;
+                    oldSpec.Value = spec.Value;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Spec updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +104,23 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteSpec(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var spec = context.Specs.FirstOrDefault(n => n.Id == id);
+                    if (spec == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.Specs.Remove(spec);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Spec deleted.");
                 }
             }
             catch (Exception ex)

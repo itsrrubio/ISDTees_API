@@ -174,19 +174,31 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ConfigsController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LineItemsController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SpecsController.cs" />
+    <Compile Include="Controllers\StylesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\AppDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305082200570_Update-Database.cs" />
-    <Compile Include="Migrations\202305082200570_Update-Database.Designer.cs">
-      <DependentUpon>202305082200570_Update-Database.cs</DependentUpon>
+    <Compile Include="Migrations\202305162338450_Add_Models.cs" />
+    <Compile Include="Migrations\202305162338450_Add_Models.Designer.cs">
+      <DependentUpon>202305162338450_Add_Models.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\LineItem.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Spec.cs" />
+    <Compile Include="Models\Style.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,8 +285,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305082200570_Update-Database.resx">
-      <DependentUpon>202305082200570_Update-Database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305162338450_Add_Models.resx">
+      <DependentUpon>202305162338450_Add_Models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

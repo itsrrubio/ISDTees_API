@@ -7,13 +7,13 @@ namespace ISDTees_API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateDatabase : IMigrationMetadata
+    public sealed partial class Add_Models : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Add_Models));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305082200570_Update-Database"; }
+            get { return "202305162338450_Add_Models"; }
         }
         
         string IMigrationMetadata.Source

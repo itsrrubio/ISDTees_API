@@ -10,7 +10,6 @@ namespace ISDTees_API.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "ISDTees_API.Data.AppDBContext";
         }
 
         protected override void Seed(ISDTees_API.Data.AppDBContext context)

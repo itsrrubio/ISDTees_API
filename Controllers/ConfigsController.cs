@@ -10,11 +10,11 @@ using System.Web.Http.Cors;
 
 namespace ISDTees_API.Controllers
 {
-    [EnableCors("http://localhost:4200","*","*")]
-    public class ProductsController : ApiController
+    [EnableCors("http://localhost:4200", "*", "*")]
+    public class ConfigsController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult GetProduct(int id)
+        public IHttpActionResult GetConfig(int id)
         {
             try
             {
@@ -22,9 +22,9 @@ namespace ISDTees_API.Controllers
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
-                    return Ok(product);
+                    var config = context.Configs.FirstOrDefault(n => n.Id == id);
+                    if (config == null) return NotFound();
+                    return Ok(config);
                 }
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProducts()
+        public IHttpActionResult GetConfigs()
         {
             try
-                {
+            {
                 //We use the using statement because it will opent the connection string and once
                 //everything is done executing it will close it.
                 using (var context = new AppDBContext())
                 {
-                    var products = context.Products.ToList();
-                    return Ok(products);
+                    var configs = context.Configs.ToList();
+                    return Ok(configs);
                 }
             }
             catch (Exception ex)
@@ -57,16 +57,17 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostEntry([FromBody] Product product)
+        public IHttpActionResult PostConfig([FromBody] Config config)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            try {
+            try
+            {
                 using (var context = new AppDBContext())
                 {
-                    context.Products.Add(product);
+                    context.Configs.Add(config);
                     context.SaveChanges();
 
-                    return Ok("Product was created!");
+                    return Ok("Config was created!");
                 }
             }
             catch (Exception ex)
@@ -76,24 +77,24 @@ namespace ISDTees_API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateProduct(int id, [FromBody]Product product)
+        public IHttpActionResult UpdateConfig(int id, [FromBody] Config config)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != product.Id) return BadRequest();
+            if (id != config.Id) return BadRequest();
 
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var oldProduct = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (oldProduct == null) return NotFound();
+                    var oldConfig = context.Configs.FirstOrDefault(n => n.Id == id);
+                    if (oldConfig == null) return NotFound();
 
-                    oldProduct.brandName = product.brandName;
-                    oldProduct.colorName = product.colorName;
-                    oldProduct.styleName = product.styleName;
+                    oldConfig.ConfigName  = config.ConfigName;
+                    oldConfig.ConfigValue  = config.ConfigValue;
+                    oldConfig.ConfigDescription  = config.ConfigDescription;
 
                     context.SaveChanges();
-                    return Ok("Product updated!");
+                    return Ok("Config updated!");
                 }
             }
             catch (Exception ex)
@@ -101,23 +102,23 @@ namespace ISDTees_API.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
         }
-    
+
         [HttpDelete]
-        public IHttpActionResult DeleteProduct(int id)
+        public IHttpActionResult DeleteConfig(int id)
         {
             try
             {
                 using (var context = new AppDBContext())
                 {
-                    var product = context.Products.FirstOrDefault(n => n.Id == id);
-                    if (product == null) return NotFound();
+                    var config = context.Configs.FirstOrDefault(n => n.Id == id);
+                    if (config == null) return NotFound();
 
-                    context.Products.Remove(product);
+                    context.Configs.Remove(config);
                     context.SaveChanges();
 
-                    return Ok("Product deleted.");
+                    return Ok("Config deleted.");
                 }
             }
             catch (Exception ex)
